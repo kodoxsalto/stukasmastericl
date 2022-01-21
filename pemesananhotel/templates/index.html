@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>DETAIL PEMESANAN KAMAR</h2>
+    <hr>
+    <table>
+        <tr>
+            <td>
+                <h3>Nama Hotel </h3>
+            </td>
+            <td>
+                {{ namaHotel }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Lama Menginap </h3>
+            </td>
+            <td>
+                {{menginap}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Tanggal CheckIN </h3>
+            </td>
+            <td>
+                {{tanggalCheckin}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Tanggal CheckOUT </h3>
+            </td>
+            <td>
+                {{tanggalCheckout}}
+            </td>
+        </tr>
+    </table>
+    {% if charge > 0 %}
+    <table>
+        <tbody>
+        <tr>
+            <th>Extra Charge</th>
+            <th>Biaya Charge</th>
+        </tr>
+        {% for i in listcharge  %}
+        <tr>
+            {% for charges,biaya in i.items %}
+            <td>
+                {{biaya}}
+            </td>
+            
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </tbody>
+        <tbody>
+        <tr>
+            <td>
+                <h3>subTotal Charge</h3>
+            </td>
+            <td>
+                {{subTotalCharge}}
+            </td>
+        </tr>
+    </tbody>
+    </table>
+    {%endif%}
+    <table>
+        <tr>
+            <td>
+                <h3>Total Biaya Kamar </h3>
+            </td>
+            <td>{{subTotalKamar}}</td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Grand Total </h3>
+            </td>
+            <td>
+                {{grandTotal}}
+            </td>
+        </tr>
+    </table>
+    <hr>
+    
+</body>
+</html>
