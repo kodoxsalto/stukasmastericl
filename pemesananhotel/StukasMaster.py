@@ -9,17 +9,23 @@ listHotel = [
             {"Jenis Kamar" : 
                 {"Single Room":
                     {"Harga":350000,
-                    "Fasilitas":"\n1. Free WiFi\n2. 1 King Bed\n3. Shower"},
+                    "Fasilitas":"\nO Free WiFi\nO 1 King Bed\nO Shower"},
                 "Family Room":
-                    {"Harga":500000,"Fasilitas":"\n1. Free WiFi\n2. 1 King Bed\n3. 1 Single Bed\n4. Shower"}
+                    {"Harga":500000,"Fasilitas":"\nO Free WiFi\nO 1 King Bed\nO 1 Single Bed\nO Shower"}
             },
             "Charge" :
-                {
-                    "Breakfast":100000,
-                    "Lunch":100000,
-                    "Dinner":150000,
-                    "Fitness":120000
-                }
+                [
+                    {"Breakfast":100000},
+                    {"Lunch":100000},
+                    {"Dinner":150000},
+                    {"Fitness":120000}
+                ]
+                # {
+                #     "Breakfast":100000,
+                #     "Lunch":100000,
+                #     "Dinner":150000,
+                #     "Fitness":120000
+                # }
             
             }
     },
@@ -28,50 +34,51 @@ listHotel = [
             "Jenis Kamar":
                 {"Single Room":
                     {"Harga":400000,
-                    "Fasilitas":"\n1. Free WiFi\n2. 1 King Bed\n3. Bathup"},
+                    "Fasilitas":"\nO Free WiFi\nO 1 King Bed\nO Bathup"},
                 "Family Room":
                 {"Harga":650000,
-                "Fasilitas":"\n1. Free WiFi\n2. 1 King Bed\n3. 1 Single Bed\n4. Bathup"}
+                "Fasilitas":"\nO Free WiFi\nO 1 King Bed\nO 1 Single Bed\nO Bathup"}
                 },
             "Charge" :
-                {
-                    "Breakfast" : 170000 ,
-                    "Fitness" : 150000,
-                    "Sauna" : 150000,
-                }
+                [
+                {"Breakfast" : 170000},
+                {"Fitness":150000},
+                {"Sauna": 150000}
+                ]
             }
             },
     {   
          "Hotel Pialepasa": {
             "Jenis Kamar":
                 {"Single Room":
-                    {"Harga":375000,"Fasilitas":"\n1. Saluran TV Premium\n2. 1 King Bed\n3. Shower"},
+                    {"Harga":375000,"Fasilitas":"\nO Saluran TV Premium\nO 1 King Bed\nO Shower"},
                 "Family Room":
-                    {"Harga":450000,"Fasilitas":"\n1. Saluran TV Premium\n2. 1 King Bed\n3. 1 Single Bed\n4. Shower"}
+                    {"Harga":450000,"Fasilitas":"\nO Saluran TV Premium\nO 1 King Bed\nO 1 Single Bed\nO Shower"}
                 },
             "Charge":
-                {
-                    "Breakfast":100000,
-                    "Lunch":100000,
-                    "Fitness":175000
-            }
+                [
+                    {"Breakfast":100000},
+                    {"Lunch":100000},
+                    {"Fitness":175000}
+        
+                ]
             }
             },
     {   
          "Hotel Menalo": {
             "Jenis Kamar":
                 {"Single Room":
-                    {"Harga":350000,"Fasilitas":"\n1. Free WiFi\n2. 1 King Bed\n3. Shower\n4. Swimming pool"},
+                    {"Harga":350000,"Fasilitas":"\nO Free WiFi\nO 1 King Bed\nO Shower\nO Swimming pool"},
                 "Family Room":
-                    {"Harga":550000,"Fasilitas":"\n1. Free WiFi\n2. 1 King Bed\n3. 1 Single Bed\n4. Shower\n5. Swimming pool"}
+                    {"Harga":550000,"Fasilitas":"\nO Free WiFi\nO 1 King Bed\nO 1 Single Bed\nO Shower\n5. Swimming pool"}
                 },
             "Charge":
-                {
-                    "Breakfast" : 100000,
-                    "Sauna" : 150000,
-                    "Salon" : 125000,
-                    "Fitness" : 150000
-                }
+                [
+                    {"Breakfast" : 100000},
+                    {"Sauna" : 150000},
+                    {"Salon" : 125000},
+                    {"Fitness" : 150000}
+                ]
             }
     }       
 ]
@@ -134,11 +141,14 @@ for namaHotel,jenisKamar in listHotel[pilihHotel-1].items():
         for item,keterangan in deskripsi.items():
             print(item,":",keterangan)
     print("\nCharge")
-    for jenisCharge,biaya in jenisKamar["Charge"].items():
-        print(jenisCharge,":",biaya)
+    for i,jenischarge in enumerate(jenisKamar["Charge"],1) :
+        for namacharge,hargacharge in jenischarge.items():
+            print(i,namacharge,":",hargacharge)
+    # for jenisCharge,biaya in jenisKamar["Charge"].items():
+    #     print(jenisCharge,":",biaya)
 
 #Menginput Kamar yang diinginkan
-pilihKamar = input("Pilih Jenis Kamar yang Anda Mau (1/2) : ")
+pilihKamar = input("\nPilih Jenis Kamar yang Anda Mau (1/2) : ")
 while True:
     if pilihKamar =="1":
         kamarTerpilih.append("Single Room")
@@ -151,29 +161,20 @@ while True:
     biayaKamar=listHotel[pilihHotel-1][namaHotel]["Jenis Kamar"][kamarTerpilih[0]]["Harga"]
     chargeHotel=listHotel[pilihHotel-1][namaHotel]["Charge"]
     break
-    
-#Menmilih Tambahan Charge Hotel
+
 pilihCharge = input("Apakah Akan Menambah Charge ? (yes/no) : ").lower()
-if pilihCharge == "yes":
-    charge = input("Masukan Jenis Charge yang diinginkan : ").capitalize()
-    biayaCharge = chargeHotel[charge]
-    tagihanCharge.append(biayaCharge)
-    chargeTerpilih.append(charge)
-    newDict = {"Charge":charge , "Biaya":biayaCharge}
-    listCharge.append(newDict)
-    decision1= input("Apakah ingin menambah lagi ? (yes/no) : ").lower()
-    while decision1 == "yes":
-        charge = input("Masukan Jenis Charge yang diinginkan : ").capitalize()
-        if charge in chargeTerpilih:
+while pilihCharge == "yes":
+    charge = int(input("Masukan Kode Charge yang diinginkan : "))
+    indexCharge = chargeHotel[charge-1]
+    for charge,biaya in indexCharge.items():
+        if charge in chargeTerpilih :
             print("Anda Telah Memilih Jenis Charge Tersebut")
-            decision1= input("Apakah ingin menambah lagi ? (yes/no) : ").lower()
-            continue
-        biayaCharge = chargeHotel[charge]
-        tagihanCharge.append(biayaCharge)
-        chargeTerpilih.append(charge)
-        newDict = {"Charge":charge , "Biaya":biayaCharge}
-        listCharge.append(newDict)
-        decision1= input("Apakah ingin menambah lagi ? (yes/no) : ").lower()
+        else:
+            tagihanCharge.append(biaya)
+            chargeTerpilih.append(charge)
+            newDict = {"Charge":charge , "Biaya":biaya}
+            listCharge.append(newDict)
+    pilihCharge = input("Apakah ingin menambah lagi ? (yes/no) : ").lower()
 
 #Menginput Tanggal CheckIN
 checkIn = input("Masukan Tanggal Check In (yyyy-mm-dd) : ")
