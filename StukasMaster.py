@@ -1,5 +1,4 @@
 #Import Library
-from operator import index
 import pandas as pd
 import datetime as dt
 
@@ -10,9 +9,9 @@ listHotel = [
             {"Jenis Kamar" : 
                 {"Single Room":
                     {"Harga":350000,
-                    "Fasilitas":"\nA. Free WiFi\nB. 1 King Bed\nC. Shower"},
+                    "Fasilitas":"\n1. Free WiFi\n2. 1 King Bed\n3. Shower"},
                 "Family Room":
-                    {"Harga":500000,"Fasilitas":"\nA. Free WiFi\nB. 1 King Bed\nC. 1 Single Bed\nD. Shower"}
+                    {"Harga":500000,"Fasilitas":"\n1. Free WiFi\n2. 1 King Bed\n3. 1 Single Bed\n4. Shower"}
             },
             "Charge" :
                 {
@@ -29,10 +28,10 @@ listHotel = [
             "Jenis Kamar":
                 {"Single Room":
                     {"Harga":400000,
-                    "Fasilitas":"\nA. Free WiFi\nB. 1 King Bed\nC. Bathup"},
+                    "Fasilitas":"\n1. Free WiFi\n2. 1 King Bed\n3. Bathup"},
                 "Family Room":
                 {"Harga":650000,
-                "Fasilitas":"\nA. Free WiFi\nB. 1 King Bed\nC. 1 Single Bed\nD. Bathup"}
+                "Fasilitas":"\n1. Free WiFi\n2. 1 King Bed\n3. 1 Single Bed\n4. Bathup"}
                 },
             "Charge" :
                 {
@@ -46,9 +45,9 @@ listHotel = [
          "Hotel Pialepasa": {
             "Jenis Kamar":
                 {"Single Room":
-                    {"Harga":375000,"Fasilitas":"\nA. Saluran TV Premium\nB. 1 King Bed\nC. Shower"},
+                    {"Harga":375000,"Fasilitas":"\n1. Saluran TV Premium\n2. 1 King Bed\n3. Shower"},
                 "Family Room":
-                    {"Harga":450000,"Fasilitas":"\nA. Saluran TV Premium\nB. 1 King Bed\nC. 1 Single Bed\nD. Shower"}
+                    {"Harga":450000,"Fasilitas":"\n1. Saluran TV Premium\n2. 1 King Bed\n3. 1 Single Bed\n4. Shower"}
                 },
             "Charge":
                 {
@@ -62,9 +61,9 @@ listHotel = [
          "Hotel Menalo": {
             "Jenis Kamar":
                 {"Single Room":
-                    {"Harga":350000,"Fasilitas":"\nA. Free WiFi\nB. 1 King Bed\nC. Shower\nD. Swimming pool"},
+                    {"Harga":350000,"Fasilitas":"\n1. Free WiFi\n2. 1 King Bed\n3. Shower\n4. Swimming pool"},
                 "Family Room":
-                    {"Harga":550000,"Fasilitas":"\nA. Free WiFi\nB. 1 King Bed\nC. 1 Single Bed\nD. Shower\n5. Swimming pool"}
+                    {"Harga":550000,"Fasilitas":"\n1. Free WiFi\n2. 1 King Bed\n3. 1 Single Bed\n4. Shower\n5. Swimming pool"}
                 },
             "Charge":
                 {
@@ -106,7 +105,7 @@ while login not in listLogin:
     password=input("Masukan Password Anda : ")
     login = username +"-"+password
 else:
-    print("Login Berhasil\n")
+    print("Login Berhasil")
     print("="*40)
 
 #Menampilkan Daftar Hotel Tersedia
@@ -115,6 +114,7 @@ for item in listHotel:
     for hotel in item :
         i+=1
         print(i,hotel)
+
 #Menginput Hotel yang dipilih
 pilihHotel = int(input("Masukan Kode Hotel : "))
 
@@ -139,13 +139,19 @@ for namaHotel,jenisKamar in listHotel[pilihHotel-1].items():
 
 #Menginput Kamar yang diinginkan
 pilihKamar = input("Pilih Jenis Kamar yang Anda Mau (1/2) : ")
-if pilihKamar =="1":
-    kamarTerpilih.append("Single Room")
-elif pilihKamar == "2":
-    kamarTerpilih.append("Family Room")
-biayaKamar=listHotel[pilihHotel-1][namaHotel]["Jenis Kamar"][kamarTerpilih[0]]["Harga"]
-chargeHotel=listHotel[pilihHotel-1][namaHotel]["Charge"]
-
+while True:
+    if pilihKamar =="1":
+        kamarTerpilih.append("Single Room")
+    elif pilihKamar == "2":
+        kamarTerpilih.append("Family Room")
+    else:
+        print("Masukkan input yang Valid")
+        pilihKamar = input("Pilih Jenis Kamar yang Anda Mau (1/2) : ")
+        continue
+    biayaKamar=listHotel[pilihHotel-1][namaHotel]["Jenis Kamar"][kamarTerpilih[0]]["Harga"]
+    chargeHotel=listHotel[pilihHotel-1][namaHotel]["Charge"]
+    break
+    
 #Menmilih Tambahan Charge Hotel
 pilihCharge = input("Apakah Akan Menambah Charge ? (yes/no) : ").lower()
 if pilihCharge == "yes":
@@ -160,6 +166,7 @@ if pilihCharge == "yes":
         charge = input("Masukan Jenis Charge yang diinginkan : ").capitalize()
         if charge in chargeTerpilih:
             print("Anda Telah Memilih Jenis Charge Tersebut")
+            decision1= input("Apakah ingin menambah lagi ? (yes/no) : ").lower()
             continue
         biayaCharge = chargeHotel[charge]
         tagihanCharge.append(biayaCharge)
@@ -170,7 +177,14 @@ if pilihCharge == "yes":
 
 #Menginput Tanggal CheckIN
 checkIn = input("Masukan Tanggal Check In (yyyy-mm-dd) : ")
-tanggalCheckIn = dt.datetime.strptime(checkIn, "%Y-%m-%d")
+while True:
+    try:
+        tanggalCheckIn = dt.datetime.strptime(checkIn, "%Y-%m-%d")
+        break
+    except ValueError:
+        print("Masukan Data yang valid")
+        checkIn = input("Masukan Tanggal Check In (yyyy-mm-dd) : ")
+        continue
 
 #Menginput Lama Hari Menginap
 menginap = int(input("Berapa lama anda akan menginap ? : "))
@@ -184,7 +198,6 @@ df_invoice={
         }
 grandTotal = sum(tagihanCharge) + totalBiayaKamar
 
-
 #Menampilkan Output Detail Pemesanan
 invoice=pd.DataFrame(data=df_invoice)
 invoice.index+=1
@@ -192,11 +205,12 @@ print("="*50)
 print(" "*10,"Detail Pemesanan Kamar")
 print("="*50)
 print("Nama Hotel \t\t:",namaHotel)
+print("Jenis Kamar \t\t:",kamarTerpilih[0])
 print("Lama Menginap \t\t:",menginap)
 print("Tanggal CheckIN\t\t:",tanggalCheckIn.date())
 print("Tanggal CheckOUT\t:",tanggalCheckOut.date())
 if len(chargeTerpilih) >0:
-    print("Transaksi\t: ")
+    print("Transaksi\t\t: ")
     print(invoice.to_string(index=True))
     print("SubTotal Charge\t\t:",sum(tagihanCharge))
 print("SubTotal Kamar\t\t:",totalBiayaKamar)
